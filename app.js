@@ -16,6 +16,7 @@ var profileJson, heartJson, stepsJson;
 var cfenv = require('cfenv');
 var path = require('path');
 var fs = require('fs');
+var session = require('express-session');
 
 // create a new express server
 var app = express();
@@ -28,6 +29,12 @@ app.set('view engine', 'ejs');
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
 
+
+
+app.use(session({secret: 'test',
+    saveUninitialized : true,
+    resave : true}));
+
 // initialize the Fitbit API client
 var FitbitApiClient = require("fitbit-node"),
     client = new FitbitApiClient("227WZZ", "809c60db91c332b6f62c51934d630066");
@@ -38,6 +45,15 @@ app.get("/authorize", function (req, res) {
     res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:6001/call'));
 });
 
+// app.get("/out", function (req,res) {
+//         res.redirect('/authorize');
+// });
+
+app.get('/out', function (req, res) {
+    console.log('logout');
+    //req.session.destroy();
+    res.render('out');
+});
 
 // handle the callback from the Fitbit authorization flow
 app.get("/call", function (req, res) {
@@ -60,20 +76,20 @@ app.get("/call", function (req, res) {
             });
 
 
-            var age = JSON.stringify(results[0]['user']['age']);
-            var fullName = JSON.stringify(results[0]['user']['fullName']);
-            var height = JSON.stringify(results[0]['user']['height']);
-            var weight = JSON.stringify(results[0]['user']['weight']);
-            var averageDailySteps = JSON.stringify(results[0]['user']['averageDailySteps']);
-            var strideLengthRunning = JSON.stringify(results[0]['user']['strideLengthRunning']);
-            var strideLengthWalking = JSON.stringify(results[0]['user']['strideLengthWalking']);
-            var country = JSON.stringify(results[0]['user']['country']);
-
-            profileJson =  {age: age, fullName: fullName, height: height, weight: weight, averageDailySteps: averageDailySteps,
-                strideLengthRunning: strideLengthRunning, strideLengthWalking: strideLengthWalking, country: country};
+            // var age = JSON.stringify(results[0]['user']['age']);
+            // var fullName = JSON.stringify(results[0]['user']['fullName']);
+            // var height = JSON.stringify(results[0]['user']['height']);
+            // var weight = JSON.stringify(results[0]['user']['weight']);
+            // var averageDailySteps = JSON.stringify(results[0]['user']['averageDailySteps']);
+            // var strideLengthRunning = JSON.stringify(results[0]['user']['strideLengthRunning']);
+            // var strideLengthWalking = JSON.stringify(results[0]['user']['strideLengthWalking']);
+            // var country = JSON.stringify(results[0]['user']['country']);
+            //
+            // profileJson =  {age: age, fullName: fullName, height: height, weight: weight, averageDailySteps: averageDailySteps,
+            //     strideLengthRunning: strideLengthRunning, strideLengthWalking: strideLengthWalking, country: country};
             //res.render('ex',{profileData: profileJson});
 
-            client.get("/activities/heart/date/today/1m.json", accessToken).then(function (resulth) {
+            client.get("/activities/heart/date/today/7d.json", accessToken).then(function (resulth) {
                 //res.send(results[0]);
 
                 heartJson = JSON.stringify(resulth[0]['activities-heart']);
@@ -95,7 +111,7 @@ app.get("/call", function (req, res) {
                         }
                     });
 
-                    res.render('heart',{profileData: profileJson, heartData: heartJson, stepsData: stepsJson});
+                    res.render('dashboard',{profileData: profileJson, heartData: heartJson, stepsData: stepsJson});
 
                 });
             });
@@ -104,6 +120,8 @@ app.get("/call", function (req, res) {
         res.send(error);
     });
 });
+
+
 
 
 // start server on the specified port and binding host
