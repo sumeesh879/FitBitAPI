@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script>
+    var profile = angular.module('profileApp', []);
+    profile.controller('profileCtrl', function($scope, $http) {
+        $http.get("/profileJson.json").then(function (response) {
+            $scope.user = response.data
+        });
+    });
+</script>
+<body>
+
+<h1>AJS Section starts</h1>
+
+<div id="profile" class="container-fluid" ng-app="profileApp" ng-controller="profileCtrl">
+
+    <!--Bed image in Center-->
+    <div class=""row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        <span class="glyphicon glyphicon-user logo slideanim"></span>
+        <h2>Profile Info</h2>
+    </div>
+    <div class="col-sm-4"></div>
+</div>
+
+<table class="table table-hover">
+    <thead>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Height</th>
+    <th>Weight</th>
+    <th>Average Daily Step</th>
+    <th>Stride Length (Running)</th>
+    <th>Stride Length (Walking)</th>
+    <th>Country</th>
+    </thead>
+    <tbody>
+    <tr ng-repeat="x in user">
+        <td>{{ x.fullName }}</td>
+        <td>{{ x.age }}</td>
+        <td>{{ x.height }}</td>
+        <td>{{ x.weight }}</td>
+        <td>{{ x.averageDailySteps }}</td>
+        <td>{{ x.strideLengthRunning }}</td>
+        <td>{{ x.strideLengthWalking }}</td>
+        <td>{{ x.country }}</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+</body>
+</html>
+
