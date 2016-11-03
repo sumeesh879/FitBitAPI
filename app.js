@@ -133,11 +133,8 @@ app.get("/call", function (req, res) {
     });
 });
 
-
-
-
+var port = process.env.PORT || 8080;
+app.listen(port);
+console.log(port);
 // start server on the specified port and binding host
-app.listen(80, '0.0.0.0', function() {
-  // print a message when the server starts listening
-  console.log("server starting on " + appEnv.url);
-});
+
