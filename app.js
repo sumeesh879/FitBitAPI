@@ -42,7 +42,7 @@ var FitbitApiClient = require("fitbit-node"),
 // redirect the user to the Fitbit authorization page
 app.get("/authorize", function (req, res) {
     // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-    res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://localhost:6001/call'));
+    res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight', 'http://54.197.12.149/call'));
 });
 
 // app.get("/out", function (req,res) {
@@ -73,7 +73,7 @@ app.get("/call", function (req, res) {
     // exchange the authorization code we just received for an access token
 
     //Getting Steps, Heart, Profile data
-    client.getAccessToken(req.query.code, 'http://localhost:6001/call').then(function (result) {
+    client.getAccessToken(req.query.code, 'http://54.197.12.149/call').then(function (result) {
         // use the access token to fetch the user's profile information
         accessToken = result.access_token;
         client.get("/profile.json", result.access_token).then(function (results) {
