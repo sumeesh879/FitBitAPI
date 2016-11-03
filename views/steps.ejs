@@ -485,7 +485,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#myPage">FTBT</a>
+            <a class="navbar-brand" href="/authorize">FTBT</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
@@ -499,111 +499,19 @@
 </nav>
 
 <div class="jumbotron text-center">
-    <h1>Welcome to FTBT</h1>
-    <p>Your Fitbit data for Today</p>
-</div>
-
-<!--Profile table-->
-<div id="profile" class="container-fluid" ng-app="profileApp" ng-controller="profileCtrl">
-
-    <!--Bed image in Center-->
-    <div class="row">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4 text-center">
-        <span class="glyphicon glyphicon-user logo slideanim"></span>
-        <h2 class="text-center">Profile Info</h2>
-    </div>
-    <div class="col-sm-4"></div>
-    </div>
-    <table class="table table-hover">
-        <thead>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Height</th>
-        <th>Weight</th>
-        <th>Average Daily Step</th>
-        <th>Stride Length (Running)</th>
-        <th>Stride Length (Walking)</th>
-        <th>Country</th>
-        </thead>
-        <tbody>
-        <tr ng-repeat="x in user">
-            <td>{{ x.fullName }}</td>
-            <td>{{ x.age }}</td>
-            <td>{{ x.height }}</td>
-            <td>{{ x.weight }}</td>
-            <td>{{ x.averageDailySteps }}</td>
-            <td>{{ x.strideLengthRunning }}</td>
-            <td>{{ x.strideLengthWalking }}</td>
-            <td>{{ x.country }}</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-<!--heart rate table-->
-<div id="heartrate" class="container-fluid" ng-app="heartApp" ng-controller="heartCtrl">
-
-    <!--Heart image in center-->
     <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4 text-center">
-            <span class="glyphicon glyphicon-heart logo slideanim"></span>
-            <h2 class = "text-center">Heart-Rate</h2>
+            <img src="http://stop-painting.com/images/IN-40-410_l.jpg" class="img-rounded" alt="Cinque Terre" width="200" height="200">
         </div>
         <div class="col-sm-4"></div>
     </div>
-    <br><br>
-    <table class="table table-hover">
-        <thead>
-        <th>Date</th>
-        <th>Type</th>
-        <th>Max Heart Rate</th>
-        <th>Min Heart Rate</th>
-        </thead>
-        <tbody>
-        <tr ng-repeat="x in myData[0].value.heartRateZones">
-            <td>{{ myData[0].dateTime }}</td>
-            <td>{{ x.name }}</td>
-            <td>{{ x.max }}</td>
-            <td>{{ x.min }}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <h2 class = "text-center">Charts</h2><br>
-    <div id="hearts_vis_div" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
-    <div id="heartsfb_vis_div" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
-    <div id="heartsc_vis_div" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
-    <div id="heartsp_vis_div" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
-
+    <h1>Steps Graph</h1>
 </div>
 
 <!--Steps table-->
 <div id="steps" class="container-fluid" ng-app="stepsApp" ng-controller="stepsCtrl">
 
-    <!--Heart image in center-->
-    <div class="row">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4 text-center">
-        <img src="http://stop-painting.com/images/IN-40-410_l.jpg" class="img-rounded" alt="Cinque Terre" width="200" height="200">
-        <h2 class = "text-center">Steps Count</h2>
-    </div>
-    <div class="col-sm-4"></div>
-</div>
-<br><br>
-<table class="table table-hover">
-    <thead>
-    <th>Date</th>
-    <th>Steps</th>
-    </thead>
-    <tbody>
-    <tr ng-repeat="x in mySteps">
-        <td>{{ x.dateTime }}</td>
-        <td>{{ x.value }}</td>
-    </tr>
-    </tbody>
-</table>
     <h2 class="text-center">Charts</h2><br>
     <div id="steps_vis_div" style="min-width: 310px; height: 400px; max-width: 800px; margin: 0 auto"></div>
 </div>
@@ -615,43 +523,6 @@
     <p>Fitbit Web App</p>
 </footer>
 
-<!--Animation for Symbols and Scrolls-->
-<script>
-    $(document).ready(function(){
-        // Add smooth scrolling to all links in navbar + footer link
-        $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
-            // Make sure this.hash has a value before overriding default behavior
-            if (this.hash !== "") {
-                // Prevent default anchor click behavior
-                event.preventDefault();
-
-                // Store hash
-                var hash = this.hash;
-
-                // Using jQuery's animate() method to add smooth page scroll
-                // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
-                $('html, body').animate({
-                    scrollTop: $(hash).offset().top
-                }, 900, function(){
-
-                    // Add hash (#) to URL when done scrolling (default click behavior)
-                    window.location.hash = hash;
-                });
-            } // End if
-        });
-
-        $(window).scroll(function() {
-            $(".slideanim").each(function(){
-                var pos = $(this).offset().top;
-
-                var winTop = $(window).scrollTop();
-                if (pos < winTop + 600) {
-                    $(this).addClass("slide");
-                }
-            });
-        });
-    })
-</script>
 
 </body>
 </html>

@@ -55,6 +55,18 @@ app.get('/out', function (req, res) {
     res.render('out');
 });
 
+app.get('/profile', function(req, res) {
+   res.render('profile');
+});
+
+app.get('/heartrate', function(req, res) {
+    res.render('heartrate');
+});
+
+app.get('/steps', function(req, res) {
+    res.render('steps');
+});
+
 // handle the callback from the Fitbit authorization flow
 app.get("/call", function (req, res) {
   console.log(req.query.code);
